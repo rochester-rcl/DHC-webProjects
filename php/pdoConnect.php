@@ -21,13 +21,14 @@ catch(PDOException $e)
     
 
 	
-$filmName = $_POST['filmName'];
-$markerType = $_POST['markerType'];
-$timestamp = $_POST['timecode'];
-$start = $_POST['start'];
-$end = $_POST['end'];
-$text = $_POST['text'];
-$target = $_POST['target'];
+
+$filmName = filter_input(INPUT_POST, 'filmName');
+$markerType = filter_input(INPUT_POST, 'markerType');
+$timestamp = filter_input(INPUT_POST, 'timecode');
+$start = filter_input(INPUT_POST, 'start');
+$end = filter_input(INPUT_POST, 'end');
+$text = filter_input(INPUT_POST, 'text');
+$target = filter_input(INPUT_POST, 'target');
 
 
 $insertTest = $connection->prepare("INSERT INTO $filmName SET filmName=:filmName, markerType=:markerType, timestamp=:timestamp, start=:start, end=:end, text=:text, target=:target");
