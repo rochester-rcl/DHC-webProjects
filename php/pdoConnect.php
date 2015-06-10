@@ -3,20 +3,21 @@
 	
 	error_reporting(E_ALL | E_STRICT);
     	ini_set("display_errors", 2);	
-
+        
+$action = filter_input(INPUT_POST,'action');
 	
-if($_POST['action'] == "getTimecode") {
+if ($action == "getTimecode") {
 
 try {
 	$connection = new PDO("mysql:host=$server;dbname=videoAnnotation", $username, $password);
 	
 	$connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-	echo "Connected successfully";
+	//echo "Connected successfully";
     }
 
 catch(PDOException $e)
     {
-	echo "Connection failed: " . $e->getMessage();
+	//echo "Connection failed: " . $e->getMessage();
     }
     
 
@@ -43,7 +44,7 @@ $insertTest->bindValue(':target', $target, PDO::PARAM_STR);
 
 $insertTest->execute();
 
-echo 'Data logged:';
+//echo 'Data logged:';
 
 }
 
