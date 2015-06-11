@@ -2,9 +2,13 @@
         var frame = 1 / 24; //Most will be 29.97 fps
         var play = true;
         var popcorn = Popcorn("#testVideo");
-        
+
         popcorn.on( "timeupdate", function() {
-            console.log( this.currentTime());
+            var time = this.currentTime();
+            var timeToString = time.toString();
+            var timeHHMMSS = timeToString.toHHMMSS();
+            
+            console.log(timeHHMMSS);
         });
         
         $(document).ready( function() {
@@ -28,11 +32,11 @@
                     popcorn.pause();
                     play = false;
                     } else {
-                    popcorn.play()
+                    popcorn.play();
                     play = true;
                     }
                     break;
                 
                 }
-                })
-        })
+                });
+        });
