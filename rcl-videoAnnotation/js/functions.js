@@ -83,6 +83,8 @@ function addPagination(selector,maxResults){
     
 //Popcorn functions
 
+
+
 function scrubMode(selector) {
     popcorn.on( "timeupdate", function() {
             var time = popcorn.currentTime();
@@ -106,6 +108,32 @@ function timeScrubbing(selector1,selector2) {
 
             });
                 return this;
+};
+
+function addFootnote(start,end,text,target){
+    popcorn.footnote({
+                                start: start,
+                                end: end,
+                                text: text + '&nbsp;' + '|' + '&nbsp',
+                                target: target 
+                            });
+}
+
+function markerHighlight(start,end,text,i) {
+    
+     popcorn.code({
+                    start: start,
+                    end: end,
+                    onStart: function() {
+                                    var $tempNo = i + 1;
+                                    changeHTML('#markersDiv2',text,start);
+                                    $('.sceneChangeMark:nth-child('+$tempNo+')').css({'color': 'red'});
+                                   },
+                    onEnd: function() {
+                                    $('.sceneChangeMark').css({'color': '#000'});
+                                   } 
+                             });
+
 }
      
     

@@ -18,44 +18,17 @@ $.ajax({
                             var $markerType = item.markerType;
                             var $target = item.target;
 
-                            popcorn.footnote({
-                                start: $start,
-                                end: $end,
-                                text: $text + '&nbsp;' + '|' + '&nbsp',
-                                target: $target 
-                            });
-                            
+                            addFootnote($start,$end,$text,$target);
+                            markerHighlight($start,$end,$text,i)
                            //Write switch case for all marker categories?
                             
-                            if ($markerType === 'Scene Change') {
-                                    
+                            if ($markerType === 'Scene Change') { 
                                     appendHTML('.sceneChangeMarkers',$text,$start);
-                                    
-                   
                                 }
-                             
-                             popcorn.code({
-                                   start: $start,
-                                   end: $end,
-                                   onStart: function() {
-                                        var $tempNo = i + 1;
-                                        changeHTML('#markersDiv2',$text,$start);
-                                        $('.sceneChangeMark:nth-child('+$tempNo+')').css({'color': 'red'});
-                                   },
-                                   onEnd: function() {
-                                        $('.sceneChangeMark').css({'color': '#000'});
-                                   }
-                                   
-                             })
-
                       });
-
                     timeScrubbing('.sceneChangeMarkers','.sceneChangeMark');
                     addPagination('.sceneChangeMark',25);
                     timeScrubbing('#markersDiv2','.sceneChangeMark');
-
-                    
-                    
                 }
             },
         error: function(xhr, desc, err) {
@@ -64,12 +37,6 @@ $.ajax({
         }
     });
 
-
-
-
-    
-
-    
 var $timeLog = $('#timeLogButton');
     
 $timeLog.on("click", function (e) {
@@ -98,20 +65,12 @@ $timeLog.on("click", function (e) {
                                 target: $target 
                             });
                             
-                            
                             if ($markerType === 'Scene Change') {
-                                    
                                     appendHTML('.sceneChangeMarkers',$text,$start);
-                   
                                 }
-
                       });
-
                     timeScrubbing('.sceneChangeMarkers','.sceneChangeMark');
                     addPagination('#markerSelectButtons','.sceneChangeMark',25);
-                    
-                    
-                    
                 }
             },
         error: function(xhr, desc, err) {
