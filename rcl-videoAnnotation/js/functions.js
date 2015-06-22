@@ -31,7 +31,7 @@ function changeHTML(selector,text,start){
     return this;
     };
 
-function iteratorCallback(i,selector,sliceMin,sliceMax) {
+function iteratorCallback(selector,sliceMin,sliceMax) {
     return function() {
         $(selector).hide();
         $(selector).slice(sliceMin,sliceMax).show();
@@ -45,32 +45,34 @@ function addPagination(selector,maxResults){
     var $maxNoOfResults = maxResults;
     var $totalResults = $(selector).length;
     var $totalPages = Math.ceil($totalResults / $maxNoOfResults);
-                    
+                 
     $(selector).hide();
     
     console.log('Total pages'+' '+$totalPages);
 
     for (i=0; i < $totalPages; i++) {
+        var $tempNo = $maxNoOfResults + 1;
         var $pageOne = i + 1;
         $pageButton = '#page-' + i + '-button';
         if(i === 0) {
                             
             console.log('Should be first loop');
+            console.log('0 '+$maxNoOfResults);
             $('.markerSelectButtons').append('<a id="page-'+i+'-button">Page '+$pageOne+'</a>');
-            $('.markerSelectButtons').on('click', '#page-'+i+'-button', iteratorCallback(i,selector,0,$maxNoOfResults));
+            $('.markerSelectButtons').on('click', '#page-'+i+'-button', iteratorCallback(selector,0,$tempNo));
                                
         }
 
         if (i > 0) {
             $tempNo = i + 1;
-            $sliceMax = $tempNo * $maxNoOfResults;
-            $sliceMin = $sliceMax - ($maxNoOfResults);
+            $sliceMax = ($tempNo * $maxNoOfResults) + 1;
+            $sliceMin = $sliceMax - $maxNoOfResults;
                             
             $('.page-'+i).css('display', 'none');
             console.log('Should be loop'+' '+i);
             console.log($sliceMin, $sliceMax);
             $('.markerSelectButtons').append('<a id="page-'+i+'-button">Page '+$pageOne+'</a>');
-            $('.markerSelectButtons').on('click', '#page-'+i+'-button', iteratorCallback(i,selector,$sliceMin,$sliceMax));
+            $('.markerSelectButtons').on('click', '#page-'+i+'-button', iteratorCallback(selector,$sliceMin,$sliceMax));
 
         }
     };
@@ -79,20 +81,15 @@ function addPagination(selector,maxResults){
     }
    
     
-    
 //Popcorn functions
-
-
 
 function scrubMode(selector) {
     popcorn.on( "timeupdate", function() {
             var time = popcorn.currentTime();
-            
-            var selectorTime = $('.sceneChangeTimeSec').text();
-            
-            if ($('.sceneChangeTimeSec:contains('+time+')')){
+
+            if ($(selector+':contains('+time+')')){
                 console.log(time);
-                $('.sceneChangeTimeSec:contains('+time+')').css({'color': 'red'});
+                $(selector+':contains('+time+')').css({'color': 'red'});
                 }
             
         });
@@ -118,7 +115,7 @@ function addFootnote(start,end,text,target){
                             });
 }
 
-function markerHighlight(start,end,text,i) {
+function markerHighlight(selector,start,end,text,i) {
     
      popcorn.code({
                     start: start,
@@ -126,10 +123,11 @@ function markerHighlight(start,end,text,i) {
                     onStart: function() {
                                     var $tempNo = i + 1;
                                     changeHTML('#markersDiv2',text,start);
-                                    $('.sceneChangeMark:nth-child('+$tempNo+')').css({'color': 'red'});
+                                    $(selector+':nth-child('+$tempNo+')').css({'color': 'red'});
+                                    console.log(selector+':nth-child('+$tempNo+')');
                                    },
                     onEnd: function() {
-                                    $('.sceneChangeMark').css({'color': '#000'});
+                                    $(selector).css({'color': '#000'});
                                    } 
                              });
 
