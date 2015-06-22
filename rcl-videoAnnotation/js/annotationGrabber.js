@@ -19,7 +19,7 @@ $.ajax({
                             var $target = item.target;
 
                             addFootnote($start,$end,$text,$target);
-                            markerHighlight($start,$end,$text,i)
+                            markerHighlight('.sceneChangeMark',$start,$end,$text,i);
                            //Write switch case for all marker categories?
                             
                             if ($markerType === 'Scene Change') { 
@@ -70,7 +70,7 @@ $timeLog.on("click", function (e) {
                                 }
                       });
                     timeScrubbing('.sceneChangeMarkers','.sceneChangeMark');
-                    addPagination('#markerSelectButtons','.sceneChangeMark',25);
+                    addPagination('#markerSelectButtons',25);
                 }
             },
         error: function(xhr, desc, err) {
