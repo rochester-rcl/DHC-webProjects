@@ -43,38 +43,37 @@ function iteratorCallback(i,selector,sliceMin,sliceMax) {
 function addPagination(selector,maxResults){
     
     var $maxNoOfResults = maxResults;
-                    var $totalResults = $(selector).length;
+    var $totalResults = $(selector).length;
+    var $totalPages = Math.ceil($totalResults / $maxNoOfResults);
                     
-                    var $totalPages = Math.ceil($totalResults / $maxNoOfResults);
-                    
-                    $(selector).hide();
+    $(selector).hide();
     
-                    console.log('Total pages'+' '+$totalPages);
+    console.log('Total pages'+' '+$totalPages);
 
-                    for (i=0; i < $totalPages; i++) {
-                        var $pageOne = i + 1;
-                        $pageButton = '#page-' + i + '-button';
-                        if(i === 0) {
+    for (i=0; i < $totalPages; i++) {
+        var $pageOne = i + 1;
+        $pageButton = '#page-' + i + '-button';
+        if(i === 0) {
                             
-                            console.log('Should be first loop');
-                            $('.markerSelectButtons').append('<a id="page-'+i+'-button">Page '+$pageOne+'</a>');
-                             $('.markerSelectButtons').on('click', '#page-'+i+'-button', iteratorCallback(i,selector,0,$maxNoOfResults));
+            console.log('Should be first loop');
+            $('.markerSelectButtons').append('<a id="page-'+i+'-button">Page '+$pageOne+'</a>');
+            $('.markerSelectButtons').on('click', '#page-'+i+'-button', iteratorCallback(i,selector,0,$maxNoOfResults));
                                
-                        }
+        }
 
-                        if (i > 0) {
-                            $tempNo = i + 1;
-                            $sliceMax = $tempNo * $maxNoOfResults;
-                            $sliceMin = $sliceMax - ($maxNoOfResults);
+        if (i > 0) {
+            $tempNo = i + 1;
+            $sliceMax = $tempNo * $maxNoOfResults;
+            $sliceMin = $sliceMax - ($maxNoOfResults);
                             
-                            $('.page-'+i).css('display', 'none');
-                            console.log('Should be loop'+' '+i);
-                            console.log($sliceMin, $sliceMax);
-                            $('.markerSelectButtons').append('<a id="page-'+i+'-button">Page '+$pageOne+'</a>');
-                            $('.markerSelectButtons').on('click', '#page-'+i+'-button', iteratorCallback(i,selector,$sliceMin,$sliceMax));
+            $('.page-'+i).css('display', 'none');
+            console.log('Should be loop'+' '+i);
+            console.log($sliceMin, $sliceMax);
+            $('.markerSelectButtons').append('<a id="page-'+i+'-button">Page '+$pageOne+'</a>');
+            $('.markerSelectButtons').on('click', '#page-'+i+'-button', iteratorCallback(i,selector,$sliceMin,$sliceMax));
 
-                            }
-                       };
+        }
+    };
               
     return this;
     }
